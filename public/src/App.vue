@@ -1,21 +1,11 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <h1>ML Survey</h1>
+    <h2>Please indicate how much you agree or disagree with each of the following statements.</h2>    
+    <router-link :to="{ name: 'single-question', params: { question: 0 }}" v-show="paramId == null" 
+    >Begin</router-link>    
+    
+    <router-view @NextQuestion="NextQuestion" :question="activeQuestion"></router-view><br/>    
   </div>
 </template>
 
@@ -24,7 +14,52 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      questions:[
+        {label:'I will hurry to places even when I have plenty of time.'},
+        {label:'My personal interests and pastimes are quite different and novel from what others do.'},
+        {label:'Chance has little to do with the successes I\'ve had in my life.'},
+        {label:'I am actively involved in a regular, rigorous fitness program'},
+        {label:'I would rather go for a walk than read a book.'},
+        {label:'I often buy new products before they become popular or come down in price.'},
+        {label:'I have much more energy than most persons my age.'},
+        {label:'I make decisions quickly and easily rather than deliberating over them.'},
+        {label:'I prefer being around people most of the time.'}
+      ],
+      activeQuestion: {},
+      paramId: null
+    }
+  },
+  beforeMount:function(){
+    this.SetPage();
+  },
+  mounted: function(){
+    
+    this.activeQuestion = this.questions[0];
+    this.paramId = parseInt(this.$route.params.question);
+  },
+  methods:{
+    SetPage: function(){
+      for(var i = 0;i < this.questions.length;i++){
+        if(!this.questions[i].value){
+          this.$router.push({ name: 'single-question', params: { question: i }});
+          return;
+        }
+      }      
+    },
+    NextQuestion:function(value){
+      console.log(value);
+      this.questions[this.paramId].value = value;
+      if((this.paramId+1) < this.questions.length){
+        this.$router.push({ name: 'single-question', params: { question: (this.paramId+1) }});      
+      }else{
+        alert('your done!');
+      }
+    }
+  },
+  watch:{
+    '$route' (to, from){
+      this.paramId = parseInt(this.$route.params.question);
+      this.activeQuestion = this.questions[this.$route.params.question];
     }
   }
 }
