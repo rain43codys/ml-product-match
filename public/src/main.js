@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import App from './App.vue'
+import Results from './Results.vue'
 import Question from './Question.vue'
+import Questions from './Questions.vue'
 
 Vue.use(VueRouter)
 
@@ -13,9 +15,15 @@ Vue.use(VueAxios, axios);
 const routes = [
   { path: '/', component: App,
   	children: [
-      {path: '/:question', name: 'single-question', component: Question},  		
+      {path: '/questions/', name: 'questions', component: Questions,
+        children: [
+          {path: '/questions/:question', name: 'single-question', component: Question}
+        ]
+      },  		
+      {path: '/results', name:'results', component: Results}
   	]
   }
+  
 ]
 
 const router = new VueRouter({
