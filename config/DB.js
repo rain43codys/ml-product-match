@@ -1,6 +1,6 @@
 module.exports = {
 	host     : 'db',
     user     : 'root',
-    password : 'password',
+    password : 'root',
     database : 'machine-learning-match',
 };

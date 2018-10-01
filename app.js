@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const brain = require("brain.js"),
       network = new brain.NeuralNetwork()
 
-console.log(config)
+// console.log(config)
 var connection = mysql.createConnection(config);
 
 var data = [];
@@ -57,10 +57,10 @@ app.post('/getResult', function(req, res){
 app.post('/postResult', function(req, res){
   // console.log(req.body)
   var user_input = JSON.stringify(req.body.input)
-  var user_output = Object.keys(req.body.output)
+  var user_output = req.body.output
 
   console.log(user_input)
-  console.log(Object.keys(user_output))
+  console.log(user_output)
   // var sql = "INSERT INTO survey_data (input, output) VALUES ('[3 ,4 ,5 ,4]', '{\"typeB\":1}')";
   var sql = "INSERT INTO survey_data (input, output) VALUES ('" + user_input + "','{" + user_output + ":1}')";
   console.log(sql)
