@@ -4,8 +4,11 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Question from './Question.vue'
 
-
 Vue.use(VueRouter)
+
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+Vue.use(VueAxios, axios);
 
 const routes = [
   { path: '/', component: App,

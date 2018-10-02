@@ -19,7 +19,7 @@ export default {
   },
   methods:{
       NextQuestion:function(){
-          if(this.value != ''){
+          if(this.value !== null){
             this.$emit('NextQuestion', this.value);     
           }
       }

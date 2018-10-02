@@ -6,6 +6,14 @@
     >Begin</router-link>    
     
     <router-view @NextQuestion="NextQuestion" :question="activeQuestion"></router-view><br/>    
+
+    <div v-show="doneSurvey" class="results">
+        You are {{surveyResult}}.<br>
+        Is this correct? <br>
+        <button @click="sendResult()">Yes</button>
+        <button @click="dontSendResult()">No</button>
+        <p>{{msg}}</p>
+    </div>
   </div>
 </template>
 
@@ -26,7 +34,14 @@ export default {
         {label:'I prefer being around people most of the time.'}
       ],
       activeQuestion: {},
-      paramId: null
+      paramId: null,
+      answers: {
+        input: [],
+        output: ""
+      },
+      surveyResult: "",
+      doneSurvey: false,
+      msg: ""
     }
   },
   beforeMount:function(){
@@ -49,11 +64,41 @@ export default {
     NextQuestion:function(value){
       console.log(value);
       this.questions[this.paramId].value = value;
+
+      if((this.answers.input.length) < this.questions.length){
+        this.answers.input.push(Number(value))
+      }
+
       if((this.paramId+1) < this.questions.length){
         this.$router.push({ name: 'single-question', params: { question: (this.paramId+1) }});      
       }else{
-        alert('your done!');
+        var self = this;
+        this.axios.post('/getResult', this.answers).then(function (response) {
+          console.log(response);
+          var type = Math.max(...Object.values(response.data))
+          var output = Object.keys(response.data).filter(key=> response.data[key] === type)
+          console.log(output)
+          self.surveyResult = output[0]
+          self.doneSurvey = true
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       }
+    },
+    sendResult: function(){
+      var self = this;
+      this.answers.output = "\""+this.surveyResult+"\"" 
+      this.axios.post('/postResult', this.answers).then(function (response) {
+        console.log(response);
+        self.msg = "Thanks for participating in the survey."
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    dontSendResult: function(){
+      this.msg = "Thanks for participating in the survey."
     }
   },
   watch:{
@@ -63,6 +108,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style>
@@ -91,5 +137,10 @@ li {
 
 a {
   color: #42b983;
+}
+.results {
+  background: #ccc;
+  margin-top: 50px;
+  padding: 40px;
 }
 </style>
