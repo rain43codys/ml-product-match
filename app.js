@@ -46,7 +46,7 @@ app.post('/getResult', function(req, res){
     
     network.train(data)
 
-    const result = network.run(req.body.input)
+    const result = network.run(req.body)
       // res.json(req)
     res.json(result)
 

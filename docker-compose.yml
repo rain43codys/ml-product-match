@@ -5,24 +5,21 @@ services:
     restart: on-failure:5
     environment:
       MYSQL_USER: root
-      MYSQL_DATABASE: dbname
+      MYSQL_DATABASE: machine-learning-match
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
   node:
     depends_on:
       - db
-    image: "node:8"
+    build: .
     user: "node"
-    working_dir: /home/node/app
     environment:
       - NODE_ENV=production
-    volumes:
-      - ./:/home/node/app
-    expose:
-      - "3000"
     ports: 
       - "80:3000"
-    command: "npm start"
+    volumes:
+      - ./:/home/node/app
+    command: npm start
     links:
       - db
   phpmyadmin:

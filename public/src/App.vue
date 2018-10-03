@@ -1,19 +1,10 @@
 <template>
   <div id="app">
     <h1>ML Survey</h1>
-    <h2>Please indicate how much you agree or disagree with each of the following statements.</h2>    
     <router-link :to="{ name: 'single-question', params: { question: 0 }}" v-show="paramId == null" 
     >Begin</router-link>    
-    
-    <router-view @NextQuestion="NextQuestion" :question="activeQuestion"></router-view><br/>    
+    <router-view @NextQuestion="NextQuestion" :questions="questions"></router-view><br/>    
 
-    <div v-show="doneSurvey" class="results">
-        You are {{surveyResult}}.<br>
-        Is this correct? <br>
-        <button @click="sendResult()">Yes</button>
-        <button @click="dontSendResult()">No</button>
-        <p>{{msg}}</p>
-    </div>
   </div>
 </template>
 
@@ -72,31 +63,10 @@ export default {
       if((this.paramId+1) < this.questions.length){
         this.$router.push({ name: 'single-question', params: { question: (this.paramId+1) }});      
       }else{
-        var self = this;
-        this.axios.post('/getResult', this.answers).then(function (response) {
-          console.log(response);
-          var type = Math.max(...Object.values(response.data))
-          var output = Object.keys(response.data).filter(key=> response.data[key] === type)
-          console.log(output)
-          self.surveyResult = output[0]
-          self.doneSurvey = true
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        
       }
     },
-    sendResult: function(){
-      var self = this;
-      this.answers.output = "\""+this.surveyResult+"\"" 
-      this.axios.post('/postResult', this.answers).then(function (response) {
-        console.log(response);
-        self.msg = "Thanks for participating in the survey."
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    },
+    
     dontSendResult: function(){
       this.msg = "Thanks for participating in the survey."
     }
