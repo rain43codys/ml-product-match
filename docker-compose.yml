@@ -3,6 +3,8 @@ services:
   db:
     image: mysql:5.7
     restart: on-failure:5
+    volumes:
+      - ./database:/var/lib/mysql
     environment:
       MYSQL_USER: root
       MYSQL_DATABASE: machine-learning-match
@@ -13,12 +15,12 @@ services:
       - db
     build: .
     user: "node"
-    environment:
-      - NODE_ENV=production
     ports: 
       - "80:3000"
     volumes:
       - ./:/home/node/app
+    environment:
+      - NODE_ENV=production
     command: npm start
     links:
       - db

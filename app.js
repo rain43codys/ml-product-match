@@ -12,7 +12,6 @@ const express = require('express'),
       
 app.use(express.static( './public/'));
 app.use(bodyParser.json());
-
       
 const brain = require("brain.js"),
       network = new brain.NeuralNetwork()
@@ -27,9 +26,8 @@ connection.connect();
 connection.on('err', function(err) {
   console.log(err)
 })
-
+let trainedNet;
 app.post('/getResult', function(req, res){
-  var user_input = req.body.input
 
   connection.query('SELECT * FROM survey_data', function (err, results, fields) {
     if (err) throw err;
@@ -41,12 +39,13 @@ app.post('/getResult', function(req, res){
       }
       data.push(train_data)
     });
-    console.log("data", data) 
-    console.log("req.body", req.body)
+    //console.log("data", data) 
+    //console.log("req.body", req.body)
     
     network.train(data)
-
-    const result = network.run(req.body)
+    trainedNet = network.toFunction();
+    const result = trainedNet(req.body)
+    console.log(result);
       // res.json(req)
     res.json(result)
 
