@@ -3,8 +3,11 @@
     <h1>ML Survey</h1>
     <router-link :to="{ name: 'single-question', params: { question: 0 }}" v-show="paramId == null" 
     >Begin</router-link>    
-    <router-view @NextQuestion="NextQuestion" :questions="questions"></router-view><br/>    
-
+    <router-view @NextQuestion="NextQuestion" :questions="questions" :train="train"></router-view><br/>    
+    <div v-if="paramId === 0" class="train">
+      <span v-if="train"> You are in training mode.</span>
+      <span v-else> Click <button @click='train = !train'>here</button> to enter training mode.</span>
+    </div>
   </div>
 </template>
 
@@ -32,7 +35,8 @@ export default {
       },
       surveyResult: "",
       doneSurvey: false,
-      msg: ""
+      msg: "",
+      train: false,
     }
   },
   beforeMount:function(){
@@ -112,5 +116,16 @@ a {
   background: #ccc;
   margin-top: 50px;
   padding: 40px;
+}
+.flex-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.train{ 
+  border: 1px solid;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 500px;
 }
 </style>

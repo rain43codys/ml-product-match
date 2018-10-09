@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'questions',
-  props:['questions'],
+  props:['questions', 'train'],
   data () {
     return {
       value: '',
@@ -26,7 +26,12 @@ export default {
       if((this.paramId+1) < this.questions.length){
         this.$router.push({ name: 'single-question', params: { question: (this.paramId+1) }});      
       }else{
-        this.$router.push({ name: 'results'});    
+        if(this.train === true) {
+          this.$router.push({ name: 'train'});    
+        }
+        else {
+          this.$router.push({ name: 'results'});    
+        }
       }
     }
   },

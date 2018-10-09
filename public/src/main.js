@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import App from './App.vue'
 import Results from './Results.vue'
+import Train from './Train.vue'
 import Question from './Question.vue'
 import Questions from './Questions.vue'
 
@@ -20,7 +21,8 @@ const routes = [
           {path: '/questions/:question', name: 'single-question', component: Question}
         ]
       },  		
-      {path: '/results', name:'results', component: Results}
+      {path: '/results', name:'results', component: Results},
+      {path: '/train', name:'train', component: Train}
   	]
   }
   
