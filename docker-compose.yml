@@ -21,7 +21,7 @@ services:
       - ./:/home/node/app
     environment:
       - NODE_ENV=production
-    command: npm start
+    command: nodemon app.js
     links:
       - db
   phpmyadmin:

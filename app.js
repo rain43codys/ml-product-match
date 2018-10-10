@@ -23,10 +23,14 @@ var data = [];
 
 connection.connect();
  
-connection.on('err', function(err) {
+connection.on('error', function(err) {
   console.log(err)
 })
 let trainedNet;
+
+app.get('/api', function(req, res){
+  res.json({test:'test'});
+});
 app.post('/getResult', function(req, res){
 
   connection.query('SELECT * FROM survey_data', function (err, results, fields) {
