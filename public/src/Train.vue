@@ -3,7 +3,7 @@
     <h1>Which of the following best describes your dream vacation?</h1>
     <div v-if="msg == ''" class="flex">
       <div v-for="(option, index) in options" @click="trainResults(option.key)" class="option">
-        <img :src="'https://picsum.photos/200/300?image='+(index*10)" alt="">
+        <img :src="'./../data-source-images/'+ option.thumbnail" alt="">
         {{ option.lookup }}
         <!-- <button @click="trainResults()">I Like it!</button>   -->
       </div>
@@ -63,6 +63,7 @@ export default {
     padding: 30px 0;
     border: 1px solid black;
     cursor: pointer;
+    margin-bottom: 30px;
   }
   .option img {
     width: 100%;

@@ -15,7 +15,7 @@ export default {
   		return products.find(item => item.key === key)["lookup"]
   	},
   	getProductImage(key) {
-  		// return products.find(item => item.key === key)["image"]
+  		return products.find(item => item.key === key)["thumbnail"]
   	}
   // },
 }
