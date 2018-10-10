@@ -33,3 +33,8 @@ services:
     restart: on-failure:5
     environment:
         PMA_HOST: db
+  webpack: 
+    build: ./public
+    volumes:
+      - ./public:/home/node/app/public
+    command: npm start
