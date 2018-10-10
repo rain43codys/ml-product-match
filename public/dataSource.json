@@ -1,0 +1,9 @@
+{
+    "products":[
+        {"key":"typeA", "lookup":"All inclusive Caribbean Resort"},
+        {"key":"typeB", "lookup":"Tour The British Isle"},
+        {"key":"typeC", "lookup":"12 Days, Tokyo to Osaka"},
+        {"key":"typeD", "lookup":"17 Days, Splendours of India"},
+        {"key":"typeE", "lookup":"Explore Southern Africa"}
+    ]
+}

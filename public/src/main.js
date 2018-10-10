@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import App from './App.vue'
+import PickMode from './PickMode.vue'
+
 import Results from './Results.vue'
 import Train from './Train.vue'
 import Question from './Question.vue'
@@ -16,6 +18,7 @@ Vue.use(VueAxios, axios);
 const routes = [
   { path: '/', component: App,
   	children: [
+      {path: '/', name:'mode', component: PickMode},
       {path: '/questions/', name: 'questions', component: Questions,
         children: [
           {path: '/questions/:question', name: 'single-question', component: Question}

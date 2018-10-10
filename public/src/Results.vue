@@ -14,6 +14,7 @@
     </ul>
     <div v-if="msg">
       {{msg}}
+      <a href="/">Go Back</a>
     </div>
   </div>
 </template>

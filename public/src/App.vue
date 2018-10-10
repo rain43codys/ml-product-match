@@ -3,17 +3,17 @@
     <h1>ML Survey</h1>
     <router-link :to="{ name: 'single-question', params: { question: 0 }}" v-show="paramId == null" 
     >Begin</router-link>    
-    <router-view @NextQuestion="NextQuestion" :questions="questions" :train="train"></router-view><br/>    
-    <div v-if="paramId === 0" class="train">
-      <span v-if="train"> You are in training mode.</span>
-      <span v-else> Click <button @click='train = !train'>here</button> to enter training mode.</span>
-    </div>
+    <router-view @pickedMode="pickedMode" @NextQuestion="NextQuestion" :questions="questions" :mode="mode"></router-view><br/>    
   </div>
 </template>
 
 <script>
+
+// import services from './services.js'
+
 export default {
   name: 'app',
+  // mixins:[services],
   data () {
     return {
       questions:[
@@ -36,25 +36,28 @@ export default {
       surveyResult: "",
       doneSurvey: false,
       msg: "",
-      train: false,
+      mode: "",
     }
   },
   beforeMount:function(){
     this.SetPage();
+    console.log(this.$route)
   },
   mounted: function(){
-    
     this.activeQuestion = this.questions[0];
     this.paramId = parseInt(this.$route.params.question);
   },
   methods:{
     SetPage: function(){
-      for(var i = 0;i < this.questions.length;i++){
-        if(!this.questions[i].value){
-          this.$router.push({ name: 'single-question', params: { question: i }});
-          return;
-        }
-      }      
+      if(!this.mode) {
+        this.$router.push({ name: 'mode' });
+      }
+      // for(var i = 0;i < this.questions.length;i++){
+        // else if(!this.questions[i].value){
+        //   this.$router.push({ name: 'single-question', params: { question: i }});
+        //   return;
+        // }
+      // }      
     },
     NextQuestion:function(value){
       console.log(value);
@@ -70,13 +73,17 @@ export default {
         
       }
     },
-    
+    pickedMode: function(value){
+      console.log(value)
+      this.mode = value;
+    },
     dontSendResult: function(){
       this.msg = "Thanks for participating in the survey."
     }
   },
   watch:{
     '$route' (to, from){
+      this.SetPage();
       this.paramId = parseInt(this.$route.params.question);
       this.activeQuestion = this.questions[this.$route.params.question];
     }
@@ -86,41 +93,44 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
 
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-a {
-  color: #42b983;
-}
-.results {
-  background: #ccc;
-  margin-top: 50px;
-  padding: 40px;
-}
-.flex-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.train{ 
-  border: 1px solid;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 500px;
-}
+  a {
+    color: #42b983;
+  }
+  .results {
+    background: #ccc;
+    margin-top: 50px;
+    padding: 40px;
+  }
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .train{ 
+    border: 1px solid red;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+  }
+  .msg {
+    padding-top: 60px;
+  }
 </style>

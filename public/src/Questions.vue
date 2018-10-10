@@ -3,13 +3,16 @@
     <h2>Please indicate how much you agree or disagree with each of the following statements.</h2>    
 
     <router-view @NextQuestion="NextQuestion" :question="activeQuestion"></router-view>
+    <div v-if="mode === 'train'" class="train">
+      <span> You are in training mode.</span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'questions',
-  props:['questions', 'train'],
+  props:['questions', 'mode'],
   data () {
     return {
       value: '',
@@ -26,7 +29,7 @@ export default {
       if((this.paramId+1) < this.questions.length){
         this.$router.push({ name: 'single-question', params: { question: (this.paramId+1) }});      
       }else{
-        if(this.train === true) {
+        if(this.mode === 'train') {
           this.$router.push({ name: 'train'});    
         }
         else {
