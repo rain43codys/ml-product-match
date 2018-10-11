@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <h1>ML Survey</h1>
     <router-link :to="{ name: 'single-question', params: { question: 0 }}" v-show="paramId == null" 
     >Begin</router-link>    
@@ -93,6 +93,9 @@ export default {
 </script>
 
 <style>
+  body {
+    margin:0; padding:0;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -100,9 +103,14 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top:70px;
   }
-
-  h1, h2 {
+  h1 {
+    margin-bottom: 30px;
+  }
+  h2 {
     font-weight: normal;
   }
 
@@ -128,9 +136,27 @@ export default {
     border: 1px solid red;
     padding: 20px;
     margin: 20px auto;
-    max-width: 500px;
+    color: red;
+    border-radius: 15px;
+    display: inline-block;
   }
   .msg {
-    padding-top: 60px;
+    border: 2px solid black;
+    width: 60%;
+    padding: 10px;
+    background: #eee;
+    border-radius: 15px;
+    margin: 0 auto;
+  }
+  .option {
+    width: 19%;
+    padding: 30px 0;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-bottom: 30px;
+    border-radius: 15px;
+  }
+  .option img {
+    width: 100%;
   }
 </style>

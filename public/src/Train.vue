@@ -1,7 +1,7 @@
 <template>
   <div id="train">
-    <h1>Which of the following best describes your dream vacation?</h1>
-    <div v-if="msg == ''" class="flex">
+    <h2>Which of the following best describes your dream vacation?</h2>
+    <div class="flex">
       <div v-for="(option, index) in options" @click="trainResults(option.key)" class="option">
         <img :src="'./../data-source-images/'+ option.thumbnail" alt="">
         {{ option.lookup }}
@@ -9,8 +9,7 @@
       </div>
     </div>
     <div v-if="msg" class="msg">
-      {{msg}}
-      <a href="/">Go Back</a>
+      {{msg}} <a href="/">Start over.</a>
     </div>
   </div>
 </template>
@@ -57,15 +56,5 @@ export default {
   .flex {
     justify-content: space-between;
     flex-wrap: wrap;
-  }
-  .option {
-    width: 30%;
-    padding: 30px 0;
-    border: 1px solid black;
-    cursor: pointer;
-    margin-bottom: 30px;
-  }
-  .option img {
-    width: 100%;
   }
 </style>

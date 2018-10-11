@@ -31,13 +31,15 @@ export default {
 </script>
 
 <style>
-  #mode.flex {
+  #mode {
     justify-content: space-around;
     cursor: pointer;
   }
   .mode {
     width: 40%;
     height: 300px;
-    border: 1px solid;
+    border: 1px solid black;
+    background: #eee;
+    border-radius: 20px;
   }
 </style>

@@ -1,7 +1,6 @@
 <template>
-  <div id="question">
-    <h2>Please indicate how much you agree or disagree with each of the following statements.</h2>    
-
+  <div id="survey">
+    <span>Please indicate how much you agree or disagree with each of the following statements.</span>
     <router-view @NextQuestion="NextQuestion" :question="activeQuestion"></router-view>
     <div v-if="mode === 'train'" class="train">
       <span> You are in training mode.</span>
@@ -48,5 +47,7 @@ export default {
 </script>
 
 <style>
-
+  #survey span {
+    font-size: 14px;
+  }
 </style>

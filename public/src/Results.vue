@@ -1,25 +1,31 @@
 <template>
   <div id="results">
-    <div v-if="msg == ''">
-      <h1>Your top result: </h1>
-      <h2>{{surveyResults[0][0]}} <button @click="saveResults(surveyResults[0][0])">I Like it!</button></h2>
+    <div>
+      <h2>Your top result: </h2>
+      <div class="option top" >
+        <img :src="'./../data-source-images/'+ surveyResults[0][3]" alt="">
+        {{ surveyResults[0][2] }} <br>
+        <button @click="saveResults(surveyResults[0][0])">I Like it!</button>
+      </div>
       <br/>
-      <strong>Didn't like? Here are some other options</strong>
+      <strong>Didn't like the result? Pick one from these other options!</strong>
     </div>
-    <ul v-if="msg == ''">
-      <li v-for="(surveyResult, index) in surveyResults" v-bind:key="surveyResult[0]" v-if="index != 0">
-        {{surveyResult[0]}}
+    <ul class="flex">
+      <li v-for="(surveyResult, index) in surveyResults" v-bind:key="surveyResult[0]" v-if="index != 0" class="option">
+        <img :src="'./../data-source-images/'+ surveyResult[3]" alt="">
+        {{surveyResult[2]}} <br>
         <button @click="saveResults(surveyResult[0])">I Like it!</button>  
       </li>
     </ul>
-    <div v-if="msg">
-      {{msg}}
-      <a href="/">Go Back</a>
+    <div v-if="msg" class="msg">
+      {{msg}} <a href="/">Start over.</a>
     </div>
   </div>
 </template>
 
 <script>
+import services from './services.js'
+
 export default {
   name: 'results',
   props:['questions'],
@@ -50,7 +56,11 @@ export default {
           }
           self.surveyResults = sortable.sort(function(a, b){
             return b[1] - a[1];
-          });
+          })
+          self.surveyResults.forEach(item =>{
+            console.log(services.getProductLookUp(item[0]))
+            item.push(services.getProductLookUp(item[0]), services.getProductImage(item[0]))
+          })
           self.doneSurvey = true
         })
         .catch(function (error) {
@@ -75,6 +85,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .flex {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .top.option {
+    width: 30%;
+    margin: 0 auto;
+  }
 </style>
