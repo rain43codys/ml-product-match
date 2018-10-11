@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>ML Survey</h1>
+    <h1>ML 1Survey</h1>
     <router-link :to="{ name: 'single-question', params: { question: 0 }}" v-show="paramId == null" 
     >Begin</router-link>    
     <router-view @pickedMode="pickedMode" @NextQuestion="NextQuestion" :questions="questions" :mode="mode"></router-view><br/>    
