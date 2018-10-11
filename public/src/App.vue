@@ -6,7 +6,6 @@
     <router-view @pickedMode="pickedMode" @NextQuestion="NextQuestion" :questions="questions" :mode="mode"></router-view><br/>    
   </div>
 </template>
-
 <script>
 
 // import services from './services.js'
