@@ -1,7 +1,7 @@
 <template>
   <div id="train">
     <h2>Which of the following best describes your dream vacation?</h2>
-    <div class="flex">
+    <div v-if="msg == ''" class="flex">
       <div v-for="(option, index) in options" @click="trainResults(option.key)" class="option">
         <img :src="'./../data-source-images/'+ option.thumbnail" alt="">
         {{ option.lookup }}
