@@ -90,8 +90,8 @@ app.post('/postResult', function(req, res){
 //       }
 //     }));
 
-const server = app.listen(3000, function(){
-  console.log('Listening on port ' + 3000);
+const server = app.listen(8001, function(){
+  console.log('Listening on port ' + 8001);
 });
 
 

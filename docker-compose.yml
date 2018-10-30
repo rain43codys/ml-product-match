@@ -16,7 +16,7 @@ services:
     build: .
     user: "node"
     ports: 
-      - "80:3000"
+      - "8001:8001"
     volumes:
       - ./:/home/node/app
     environment:
@@ -29,7 +29,7 @@ services:
         - db
     image: phpmyadmin/phpmyadmin
     ports:
-        - 8080:80 # (*)
+        - 9001:80 # (*)
     restart: on-failure:5
     environment:
         PMA_HOST: db
